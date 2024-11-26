@@ -18,7 +18,7 @@ public class Bank
     // Constructor method - this provides a couple of example bank accounts to work with
     public Bank()
     {
-        Debug.trace( "Bank::<constructor>"); 
+        Debug.trace( "Bank::<constructor>");
 
         
     }
@@ -70,7 +70,12 @@ public class Bank
         
         // YOU NEED TO ADD CODE HERE TO FIND THE RIGHT ACCOUNT IN THE accounts ARRAY, 
         // SET THE account VARIABLE AND RETURN true
-        
+        for (int i = 0; i < numAccounts; i++){
+            if (accounts[i].accNumber == newAccNumber && accounts[i].accPasswd == newAccPasswd) {
+                account = accounts[i];
+                return true;
+            }
+        }        
 
         // not found - return false
         account = null;
