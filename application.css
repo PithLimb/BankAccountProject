@@ -1,0 +1,25 @@
+/* JavaFX CSS - Leave t/* atm.css */
+#Layout {
+    -fx-padding: 10;
+    -fx-background-color: #f0f0f0;
+}
+
+#Buttons {
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+}
+
+Button {
+    -fx-font-size: 14px;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 40px;
+}
+
+Label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+TextField, TextArea {
+    -fx-font-size: 16px;
+}
