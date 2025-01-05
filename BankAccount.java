@@ -55,27 +55,28 @@ public class BankAccount {
 
    // Withdraw money from the account. Return true if successful, or 
    // false if the amount is negative, or less than the amount in the account
-   public boolean withdraw(double amount) {
-       Debug.trace("BankAccount::withdraw: amount = " + amount);
-       if (amount > 0 && (balance - amount) >= -500) { // Allow overdraft up to -500
-           balance -= amount;
-           updateBalanceInDB();
-           return true;
-       }
-       return false;
-   }
+    public boolean withdraw( double amount ) 
+    { 
+        Debug.trace( "BankAccount::withdraw: amount =" + amount ); 
+
+        if (amount > 0 - overdraft && amount <= balance + overdraft){
+            balance -= amount;
+            return true;
+        }
+        return false;
+    }
 
    // Deposit the amount of money into the account. Return true if successful,
    // or false if the amount is negative
-   public boolean deposit(double amount) {
-       Debug.trace("BankAccount::deposit: amount = " + amount);
-       if (amount > 0) {
-           balance += amount;
-           updateBalanceInDB();
-           return true;
-       }
-       return false;
-   }
+    public boolean deposit( double amount )
+    { 
+        Debug.trace( "LocalBank::deposit: amount = " + amount ); 
+        if (amount > 0){
+            balance += amount;
+            return true;
+        }
+        return false;
+    }
 
    // Update balance in the database  
    private void updateBalanceInDB() {
@@ -110,4 +111,19 @@ public class BankAccount {
        Debug.trace("BankAccount::fetchAccount: Account not found.");
        return null;
    }
+
+       // Return to overdraft limit for the account
+    public int getOverdraft(){
+        Debug.trace("LocalBank::getOverdraft");
+
+        return overdraft;
+    }
+
+    public boolean transfer(BankAccount targetAccount, int amount) {
+        if (this.withdraw(amount)) {  // Withdraw from the current account
+            targetAccount.deposit(amount);  // Deposit into the target account
+            return true;
+        }
+        return false;  // Transfer failed if withdraw failed
+    }
 }
