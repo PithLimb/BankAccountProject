@@ -184,4 +184,45 @@ public class Model {
         Debug.trace("Model::display");
         view.update();
     }
+
+        // Transfer fucntion for sending money to other accounts
+    public void processTransfer() {
+        switch (state) {
+            case LOGGED_IN:
+                // First step: Ask for the target account number
+                setState(TRANSFER_ACCOUNT);
+                display1 = ""; // Clear the display for input
+                display2 = "Enter the target account number, then press Trn";
+                break;
+
+            case TRANSFER_ACCOUNT:
+                // Second step: Save the target account number and ask for the amount
+                targetAccountNumber = number; // Capture the input as the account number
+                number = 0; // Reset the number for the next input
+                display1 = "";
+                display2 = "Enter the transfer amount, then press Trn";
+                setState(TRANSFER_AMOUNT);
+                break;
+
+            case TRANSFER_AMOUNT:
+                // Final step: Perform the transfer
+                int transferAmount = number; // Capture the amount
+                number = 0; // Reset for future operations
+
+                // Perform the transfer
+                if (bank.transfer(targetAccountNumber, transferAmount)) {
+                    display2 = "Transferred " + transferAmount + " to account " + targetAccountNumber;
+                } else {
+                    display2 = "Transfer failed. Check the account number or balance.";
+                }
+
+                // Reset the state to logged in
+                setState(LOGGED_IN);
+                break;
+
+            default:
+                initialise("Invalid transfer operation");
+        }
+        display(); // Update the GUI
+    }
 }
