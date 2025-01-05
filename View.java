@@ -77,7 +77,7 @@ class View {
             {"7",    "8",  "9",  "",  "Dep",  ""},
             {"4",    "5",  "6",  "",  "W/D",  ""},
             {"1",    "2",  "3",  "",  "Bal",  "Fin"},
-            {"CLR",  "0",  "",   "",  "",     "Ent"} 
+            {"CLR",  "0",  "",   "",  "Trn",  "Ent"} 
         };
 
         // loop through the array, making a Button object for each label 
