@@ -46,6 +46,9 @@ public class Controller {
            default:
                model.processUnknownKey(action);
                break;
+           case "Trn":
+             model.processTransfer();
+             break;
        }
    }
 }
