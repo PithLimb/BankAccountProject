@@ -85,4 +85,41 @@ public class Bank {
             return -1; // Use -1 as an indicator of an error
         }
     }
+
+    //transfer money between accoutns (by calling the transfer method on the BankAccount object)
+    public boolean transfer(int targetAccNumber, int amount) {
+        if (account == null) {
+            Debug.trace("Bank::transfer: No account is logged in");
+            return false; // No logged-in account
+        }
+
+        // Ensure the amount is valid
+        if (amount <= 0) {
+            Debug.trace("Bank::transfer: Invalid transfer amount");
+            return false;
+        }
+
+        // Find the target account
+        BankAccount targetAccount = null;
+        for (int i = 0; i < numAccounts; i++) {
+            if (accounts[i].accNumber == targetAccNumber) {
+                targetAccount = accounts[i];
+                break;
+            }
+        }
+
+        if (targetAccount == null) {
+            Debug.trace("Bank::transfer: Target account not found");
+            return false; // Target account does not exist
+        }
+
+        // Delegate the transfer to the BankAccount method
+        if (account.transfer(targetAccount, amount)) {
+            Debug.trace("Bank::transfer: Transferred " + amount + " to account " + targetAccNumber);
+            return true; // Transfer successful
+        } else {
+            Debug.trace("Bank::transfer: Transfer failed (insufficient funds)");
+            return false; // Transfer failed (e.g., insufficient funds)
+        }
+    }
 }
